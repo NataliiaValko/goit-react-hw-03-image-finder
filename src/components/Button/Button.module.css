@@ -1,21 +1,11 @@
-/* .searchForm__button {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 0;
-  right: 240px;
-
+.button {
   padding: 10px;
-  width: 80px;
-  height: 70px;
-  border-radius: 0 20px 20px 0;
+  width: 150px;
+  height: 50px;
+  margin-top: 30px;
+  border-radius: 20px;
   background-color: #5ab1e4;
-  font-size: 20px;
+  font-size: 15px;
   border: none;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
+  box-shadow: 12px 12px 12px rgb(0 0 0 / 55%);
 }
-
-.icon {
-  font-size: 32px;
-} */

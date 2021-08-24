@@ -1,59 +1,49 @@
+import PropTypes from "prop-types";
 import { Component } from "react";
 import ImageDataView from "../ImageDataView";
 import ImageErrorView from "../ImageErrorView";
 import ImagePendingView from "../ImagePendingView";
 import ImageIdlingView from "../ImageIdlingView";
-import apiPixabay from "../../service/image-api";
-// import s from "./ImageGallery.module.css";
-
-const Status = {
-  IDLE: "idle",
-  PENDING: "pending",
-  RESOLVED: "resolved",
-  REJECTED: "rejected",
-  MORE_LOAD: "moreLoad",
-};
 
 class ImageGallery extends Component {
   state = {
-    query: "",
-    images: [],
-    page: 1,
-    error: "",
-    status: Status.IDLE,
+    showModal: false,
+    urlModal: "",
+    onLoading: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const newQuery = this.props.query;
-
-    if (prevProps.query !== newQuery) {
-      this.setState({ status: Status.PENDING, error: "", images: [], page: 1 });
-      apiPixabay
-        .fetchImage(newQuery)
-        .then(({ hits }) => {
-          this.setState({ images: hits });
-          return hits;
-        })
-        .then((hits) => {
-          setTimeout(() => {
-            hits[0]
-              ? this.setState({ status: Status.RESOLVED })
-              : this.setState({
-                  status: Status.REJECTED,
-                  error:
-                    "We couldn’t find anything =/. Change your request, please!",
-                });
-          }, 300);
-        })
-
-        .catch((txt) => {
-          this.setState({ status: Status.REJECTED, error: `${txt}` });
-        });
+    if (this.state.showModal || prevState.showModal) {
+      return;
     }
+
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: "smooth",
+    });
   }
 
+  openModal = (url) => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+      urlModal: url,
+    }));
+  };
+
+  closeModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+      urlModal: "",
+    }));
+  };
+
+  toggleOnloading = () => {
+    this.setState(({ onLoading }) => ({ onLoading: !onLoading }));
+  };
+
   render() {
-    const { error, status, images } = this.state;
+    const { onLoading, showModal, urlModal } = this.state;
+    const { error, status, images } = this.props;
 
     if (status === "idle") {
       return <ImageIdlingView />;
@@ -68,17 +58,27 @@ class ImageGallery extends Component {
     }
 
     if (status === "resolved") {
-      return <ImageDataView images={images} />;
+      return (
+        <ImageDataView
+          onLoading={onLoading}
+          toggleOnloading={this.toggleOnloading}
+          urlModal={urlModal}
+          images={images}
+          closeModal={this.closeModal}
+          openModal={this.openModal}
+          showModal={showModal}
+        />
+      );
     }
-    return <p>test</p>;
   }
 }
 
 export default ImageGallery;
 
 ImageGallery.propTypes = {
-  //   contacts: PropTypes.arrayOf(
-  //     PropTypes.objectOf(PropTypes.string.isRequired).isRequired
-  //   ).isRequired,
-  //   onDeleteContact: PropTypes.func.isRequired,
+  query: PropTypes.string.isRequired,
+  images: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  page: PropTypes.number.isRequired,
+  error: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
 };

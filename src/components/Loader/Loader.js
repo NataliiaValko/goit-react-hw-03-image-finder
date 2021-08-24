@@ -10,7 +10,7 @@ const Loader = () => (
       width={80}
       className={s.loader}
     />
-    <p>Searching...</p>
+    <p>Loading...</p>
   </>
 );
 

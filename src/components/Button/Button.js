@@ -1,24 +1,14 @@
-// import { BsSearch } from "react-icons/bs";
-// // import ReactNotification from "react-notifications-component";
-// // import "react-notifications-component/dist/theme.css";
+import PropTypes from "prop-types";
+import s from "./Button.module.css";
 
-// import showNotification from "../Notification";
-// import s from "./Button.module.css";
+const Button = ({ text, handleIncrement }) => (
+  <button type="button" className={s.button} onClick={handleIncrement}>
+    {text}
+  </button>
+);
 
-// // class Searchbar extends Component {
-// //   state = {
-// //     value: "",
-// //   };
+export default Button;
 
-// const Button = ({ onSubmit }) => (
-//   <button
-//     type="submit"
-//     className={s.searchForm__button}
-//     onSubmit={onSubmit}
-//     // handlerError={showNotification}
-//   >
-//     <BsSearch className={s.icon} />
-//   </button>
-// );
-
-// export default Button;
+Button.propTypes = {
+  handleIncrement: PropTypes.func.isRequired,
+};

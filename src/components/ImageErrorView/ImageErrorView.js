@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import s from "./ImageErrorView.module.css";
 
 const ImageErrorView = ({ message }) => {
@@ -5,3 +6,7 @@ const ImageErrorView = ({ message }) => {
 };
 
 export default ImageErrorView;
+
+ImageErrorView.propTypes = {
+  message: PropTypes.string.isRequired,
+};
