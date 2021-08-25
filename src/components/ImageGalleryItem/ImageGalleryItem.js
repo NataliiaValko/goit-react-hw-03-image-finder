@@ -2,9 +2,8 @@ import PropTypes from "prop-types";
 import s from "./ImageGalleryItem.module.css";
 
 const ImageGalleryItem = ({
-  id,
   openModal,
-  toggleOnloading,
+  toggleOnLoading,
   webformatURL,
   largeImageURL,
   tags = "photo",
@@ -14,7 +13,7 @@ const ImageGalleryItem = ({
       <img
         onClick={(e) => {
           openModal(e.target.dataset.large);
-          toggleOnloading();
+          toggleOnLoading();
         }}
         src={webformatURL}
         data-large={largeImageURL}
@@ -31,6 +30,6 @@ ImageGalleryItem.propTypes = {
   webformatURL: PropTypes.string.isRequired,
   largeImageURL: PropTypes.string.isRequired,
   tags: PropTypes.string.isRequired,
-  toggleOnloading: PropTypes.func.isRequired,
+  toggleOnLoading: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
 };
