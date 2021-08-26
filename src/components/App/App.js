@@ -130,7 +130,7 @@ class App extends Component {
             {status === "idle" && (
               <p className={s.gallery__request}>Please, enter your request!</p>
             )}
-            {status === "pending" && <Loader />}
+
             {status === "rejected" && (
               <p className={s.gallery__error}>Oops! {error}</p>
             )}
@@ -149,6 +149,7 @@ class App extends Component {
                 )}
               </>
             )}
+            {status === "pending" && <Loader />}
           </Container>
         </section>
 
