@@ -16,7 +16,7 @@ const Status = {
   PENDING: "pending",
   RESOLVED: "resolved",
   REJECTED: "rejected",
-  MORE_LOAD: "moreLoad",
+  LOADING: "loading",
 };
 
 class App extends Component {
@@ -58,12 +58,12 @@ class App extends Component {
     const newQuery = this.state.query;
     const newPage = this.state.page;
 
-    if (prevState.query !== newQuery) {
-      this.setState({ status: Status.PENDING, error: "", images: [], page: 1 });
+    if (this.state.status === Status.LOADING) {
+      this.setState({ error: "", status: Status.PENDING });
       this.onGetImages(newQuery, newPage);
     }
 
-    if (prevState.page !== newPage) {
+    if (this.state.status !== Status.LOADING && prevState.page !== newPage) {
       this.setState({ error: "" });
       this.onGetImages(newQuery, newPage);
     }
@@ -95,7 +95,13 @@ class App extends Component {
   };
 
   handleFormSubmit = (query) => {
-    this.setState({ query });
+    this.setState({
+      images: [],
+      query,
+      page: 1,
+      status: Status.LOADING,
+      total: "null",
+    });
   };
 
   handleIncrement = () => {
